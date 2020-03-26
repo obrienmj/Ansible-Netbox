@@ -1,0 +1,23 @@
+---
+- name: Playbook to backup configs on Cisco Routers
+  connection: network_cli
+  hosts: device_roles_router
+  gather_facts: False
+
+  tasks:
+    - name: Show running config on device
+      ios_command:
+        commands:
+          - show run
+      register: config
+
+    - name: Save output to backups folder
+      copy:
+        content: "{{ config.stdout[0] }}"
+        dest: "./backups/{{ inventory_hostname }}-config.txt"
+...
+
+
+
+
+

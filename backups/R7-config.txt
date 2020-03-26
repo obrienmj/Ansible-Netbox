@@ -1,0 +1,178 @@
+Building configuration...
+
+Current configuration : 2451 bytes
+!
+! Last configuration change at 21:45:34 UTC Wed Mar 25 2020
+!
+version 15.4
+no service timestamps debug uptime
+no service timestamps log uptime
+no platform punt-keepalive disable-kernel-core
+platform console virtual
+!
+hostname R7
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$Nd28$s.qSfe.NNELnIo0FP8cCv1
+!
+no aaa new-model
+!
+ip vrf MGMT
+!
+!
+!
+!
+!
+!
+!
+
+
+no ip domain lookup
+ip domain name ccie.lab
+!
+!
+!
+ipv6 unicast-routing
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+multilink bundle-name authenticated
+!
+!
+license udi pid CSR1000V sn 9SNU94505ZT
+license accept end user agreement
+license boot level premium
+spanning-tree extend system-id
+!
+username ccie privilege 15 secret 5 $1$2kRm$9ZwK9xg2HHbojzTMF.rux0
+!
+redundancy
+ mode none
+!
+!
+!
+!
+!
+cdp run
+!
+ip tftp source-interface GigabitEthernet4
+ip ssh version 2
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+interface Loopback0
+ ip address 150.1.7.7 255.255.255.255
+ ipv6 address 2001:150:7:7::7/128
+!
+interface GigabitEthernet1
+ no ip address
+ negotiation auto
+ cdp enable
+!
+interface GigabitEthernet1.7
+ encapsulation dot1Q 7
+ ip address 155.1.7.7 255.255.255.0
+ ipv6 address 2001:155:1:7::7/64
+!
+interface GigabitEthernet1.37
+ encapsulation dot1Q 37
+ ip address 155.1.37.7 255.255.255.0
+ ipv6 address 2001:155:1:37::7/64
+!
+interface GigabitEthernet1.67
+ encapsulation dot1Q 67
+ ip address 155.1.67.7 255.255.255.0
+ ipv6 address 2001:155:1:67::7/64
+!
+interface GigabitEthernet1.79
+ encapsulation dot1Q 79
+ ip address 155.1.79.7 255.255.255.0
+ ipv6 address 2001:155:1:79::7/64
+!
+interface GigabitEthernet2
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet3
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet4
+ ip vrf forwarding MGMT
+ ip address 10.2.2.107 255.255.255.0
+ negotiation auto
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0
+ exec-timeout 0 0
+ privilege level 15
+ password ccie
+ logging synchronous
+ login local
+ transport input all
+line vty 1
+ exec-timeout 0 0
+ privilege level 15
+ password ccie
+ logging synchronous
+ login local
+ length 0
+ transport input all
+line vty 2 4
+ exec-timeout 0 0
+ privilege level 15
+ password ccie
+ logging synchronous
+ login local
+ transport input all
+line vty 5 15
+ exec-timeout 0 0
+ logging synchronous
+ login local
+!
+!
+end
