@@ -1,0 +1,33 @@
+---
+#Playbook to Upgrade Routers IOS Versions
+#Enter a single device as hosts or use device_roles_Router for group
+
+- name: Upgrade Router IOS
+  hosts: device_types_ISR4331:device_types_ISR4321
+  connection: network_cli
+  gather_facts: False
+
+  vars:
+    upgrade_ver: 16.06.06
+
+  tasks:
+    - name: Check Current Version
+      ios_facts:
+
+    - name: Upgrade Firmware For Non-Compliant Routers
+      block:
+
+      - name: COPY FILE
+        command: "scp ./images/isr4300-universalk9.16.06.06.SPA.bin neteng@{{ansible_host}}:/isr4300-universalk9.16.06.06.SPA.bin"
+
+      - name: SET BOOTVAR
+        ios_config:
+          commands:
+            - "boot system flash bootflash:isr4300-universalk9.16.06.06.SPA.bin"
+          save_when: always
+
+      - ios_command:
+          commands:
+            - "reload at 20:00\ny"
+
+      when: ansible_net_version != upgrade_ver
